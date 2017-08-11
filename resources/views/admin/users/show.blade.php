@@ -5,6 +5,29 @@
         <div class="row">
             <h3>Ver Usuário</h3>
 
+            @php
+                $linkEdit = route('admin.users.edit', ['user' => $user->id]);
+                $linkDelete = route('admin.users.destroy', ['user' => $user->id]);
+            @endphp
+
+            {!! Button::warning('Editar')->asLinkTo($linkEdit) !!}
+            {!!
+                Button::danger('Excluir')->asLinkTo($linkDelete)->addAttributes(
+                    ['onclick' => "event.preventDefault();document.getElementById(\"form-delete\").submit();"]
+                )
+            !!}
+
+            @php
+                $formDelete = FormBuilder::plain([
+                    'id' => 'form-delete',
+                    'url' => $linkDelete,
+                    'method' => 'DELETE',
+                    'style' => 'display:none'
+                ])
+            @endphp
+            {!! form($formDelete) !!}
+
+            <br><br>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
